@@ -7,7 +7,7 @@ eufy-security-ws is available via a Docker image
 | - | - |
 | `USERNAME` | Eufy Account Username (required) |
 | `PASSWORD` | Eufy Account Password (required) |
-| `COUNTRY` | ISO 3166-1 Alpha-2 country code (default: US) |
+| `COUNTRY` | ISO 3166-1 Alpha-2 country code (default: US) (required if outside US) |
 | `LANGUAGE` | ISO 639 language code (default: en) |
 | `TRUSTED_DEVICE_NAME` | Label of the trusted devices (viewable with 2fa activated in Eufy App; default: random device name) |
 | `EVENT_DURATION_SECONDS` | Duration in seconds before an event is reset E.g. motion event (default: 10 sec.) |
