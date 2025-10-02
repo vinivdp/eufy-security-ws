@@ -469,6 +469,15 @@ export class EventForwarder {
                 event: StationEvent.connected,
                 serialNumber: station.getSerial()
             }, 0);
+
+            // Also send property changed to update cached connected state
+            this.forwardEvent({
+                source: "station",
+                event: StationEvent.propertyChanged,
+                serialNumber: station.getSerial(),
+                name: "connected",
+                value: true
+            }, 0);
         });
 
         station.on("close", () => {
@@ -477,6 +486,15 @@ export class EventForwarder {
                 event: StationEvent.disconnected,
                 serialNumber: station.getSerial()
             }, 0);
+
+            // Also send property changed to update cached connected state
+            this.forwardEvent({
+                source: "station",
+                event: StationEvent.propertyChanged,
+                serialNumber: station.getSerial(),
+                name: "connected",
+                value: false
+            }, 0);
         });
 
         station.on("connection error", () => {
@@ -484,6 +502,15 @@ export class EventForwarder {
                 source: "station",
                 event: StationEvent.connectionError,
                 serialNumber: station.getSerial()
+            }, 13);
+
+            // Also send property changed to update cached connected state
+            this.forwardEvent({
+                source: "station",
+                event: StationEvent.propertyChanged,
+                serialNumber: station.getSerial(),
+                name: "connected",
+                value: false
             }, 13);
         });
 
