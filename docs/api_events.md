@@ -1897,3 +1897,20 @@ interface {
   }
 }
 ```
+
+### `lookup failure`
+
+[compatible with schema version: 22+]
+
+This event is sent when a standalone camera (T8B0*, T8150*) fails to connect because local network lookup failed and the HTTP connection timed out. This indicates the device is truly offline (not reachable on local network).
+
+```ts
+interface {
+  type: "event";
+  event: {
+    source: "device";
+    event: "lookup failure";
+    serialNumber: string;
+  }
+}
+```

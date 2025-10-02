@@ -2,6 +2,9 @@
 
 This document describes the changes that are introduced with each schema version.
 
+## Schema 22
+* Added new Device event `lookup failure` - emitted when standalone camera (T8B0*, T8150*) fails local network lookup and connection times out
+
 ## Schema 21
 * Added new properties `notificationVehicle`, `flickerAdjustment`, `leavingDetection`, `leavingReactionNotification`, `leavingReactionStartTime`, `leavingReactionEndTime`, `someoneGoing`, `lockEventOrigin`, `beepVolume`, `nightvisionOptimization`, `nightvisionOptimizationSide`, `deliveries`, `openMethod`, `motionActivatedPrompt`, `open`, `openedByType`, `openedByName`, `tamperingAlert`, `lowTemperatureAlert`, `highTemperatureAlert`, `lidStuckAlert`, `pinIncorrectAlert`, `batteryFullyChargedAlert`, `isDeliveryDenied` and `hasMasterPin` to Device
 * Added new Device events `open`, `tampering`, `low temperature`, `high temperature`, `lid stuck`, `pin incorrect` and `battery fully charged`

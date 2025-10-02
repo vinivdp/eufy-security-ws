@@ -58,6 +58,7 @@ export enum DeviceEvent {
     lidStuck = "lid stuck",
     pinIncorrect = "pin incorrect",
     batteryFullyCharged = "battery fully charged",
+    lookupFailure = "lookup failure",
 }
 
 export interface OutgoingEventDeviceBase extends OutgoingBaseEvent {
@@ -471,6 +472,12 @@ export interface OutgoingEventDeviceBatteryFullyCharged extends OutgoingEventDev
     state: boolean;
 }
 
+export interface OutgoingEventDeviceLookupFailure extends OutgoingEventDeviceBase {
+    source: "device";
+    event: DeviceEvent.lookupFailure;
+    serialNumber: string;
+}
+
 export type OutgoingEventDevice =
   | OutgoingEventDeviceAdded
   | OutgoingEventDeviceRemoved
@@ -526,4 +533,5 @@ export type OutgoingEventDevice =
   | OutgoingEventDeviceHighTemperature
   | OutgoingEventDeviceLidStuck
   | OutgoingEventDevicePinIncorrect
-  | OutgoingEventDeviceBatteryFullyCharged;
+  | OutgoingEventDeviceBatteryFullyCharged
+  | OutgoingEventDeviceLookupFailure;

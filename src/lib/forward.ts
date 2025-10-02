@@ -469,15 +469,6 @@ export class EventForwarder {
                 event: StationEvent.connected,
                 serialNumber: station.getSerial()
             }, 0);
-
-            // Also send property changed to update cached connected state
-            this.forwardEvent({
-                source: "station",
-                event: StationEvent.propertyChanged,
-                serialNumber: station.getSerial(),
-                name: "connected",
-                value: true
-            }, 0);
         });
 
         station.on("close", () => {
@@ -485,15 +476,6 @@ export class EventForwarder {
                 source: "station",
                 event: StationEvent.disconnected,
                 serialNumber: station.getSerial()
-            }, 0);
-
-            // Also send property changed to update cached connected state
-            this.forwardEvent({
-                source: "station",
-                event: StationEvent.propertyChanged,
-                serialNumber: station.getSerial(),
-                name: "connected",
-                value: false
             }, 0);
         });
 
@@ -504,14 +486,21 @@ export class EventForwarder {
                 serialNumber: station.getSerial()
             }, 13);
 
-            // Also send property changed to update cached connected state
-            this.forwardEvent({
-                source: "station",
-                event: StationEvent.propertyChanged,
-                serialNumber: station.getSerial(),
-                name: "connected",
-                value: false
-            }, 13);
+            // Check if this is a standalone camera (device SN === station SN)
+            const stationSerial = station.getSerial();
+            this.clients.driver.getDevice(stationSerial).then((device: Device) => {
+                if (device && device.getStationSerial() === device.getSerial()) {
+                    // Standalone camera - emit device-level lookup failure event
+                    this.logger.info(`[lookup failure] Device ${stationSerial} failed local lookup and timed out`);
+                    this.forwardEvent({
+                        source: "device",
+                        event: DeviceEvent.lookupFailure,
+                        serialNumber: stationSerial
+                    }, 22); // Schema 22
+                }
+            }).catch(() => {
+                // Not a device or getDevice failed - ignore
+            });
         });
 
         station.on("guard mode", (station: Station, guardMode: number) => {
